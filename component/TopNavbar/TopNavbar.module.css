@@ -1,0 +1,28 @@
+.topnav ul li {
+    list-style-type: none;
+  }
+  .topnav ul li:hover {
+    color: #f79837;
+  }
+  
+  .topnav {
+    background-color: #ebebeb;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .topnav .btn {
+    background-color: none;
+  }
+  
+  .topnavText {
+    color: #f79837;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  
+  @media only screen and (max-width: 690px) {
+    .topNavContent {
+      justify-content: center !important;
+    }
+  }
+  
