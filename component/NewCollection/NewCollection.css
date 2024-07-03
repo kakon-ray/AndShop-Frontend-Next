@@ -1,0 +1,22 @@
+#newcollection {
+    text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
+  }
+  #newcollection .card-body {
+    position: absolute;
+    top: 30%;
+  }
+  
+  #newcollection .card-title {
+    font-size: 22px;
+    color: #f79837;
+    font-weight: 700;
+  }
+  #newcollection {
+    font-size: 22px;
+    color: #f79837;
+    font-weight: 700;
+  }
+  
+
+  

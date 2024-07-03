@@ -1,0 +1,23 @@
+/* [1] The container */
+.img-hover-zoom {
+    overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+  }
+  
+  /* [2] Transition property for smooth transformation of images */
+  .img-hover-zoom img {
+    transition: transform 1s ease;
+    -webkit-transition: transform 1s ease;
+    -moz-transition: transform 1s ease;
+    -ms-transition: transform 1s ease;
+    -o-transition: transform 1s ease;
+  }
+  
+  /* [3] Finally, transforming the image when container gets hovered */
+  .img-hover-zoom:hover img {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+  }
+  

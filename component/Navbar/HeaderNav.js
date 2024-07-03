@@ -36,10 +36,10 @@ const HeaderNav = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Link href="/home" className="nav-link pt-0">
+              <Link href="/" className="nav-link pt-0">
                 Home
               </Link>
-              <Link href="/home" className="nav-link pt-0">
+              <Link href="/shop" className="nav-link pt-0">
                 Shop
               </Link>
 
