@@ -3,8 +3,11 @@ import "./HeaderBanner.css";
 import banner1 from "../images/img/banner_3.71b74319.jpg";
 import banner2 from "../images/img/man.422a052d.png";
 import "./HeaderBanner.css";
+import Image from 'next/image'
 
 const HeaderBanner = () => {
+
+  
   return (
     <div
       id="header-banner"
@@ -29,7 +32,7 @@ const HeaderBanner = () => {
         </div>
         <div className="col-md-6">
           <div className="ms-3">
-            <img
+            <Image
               src={banner2}
               alt=""
               className="img-fluid"

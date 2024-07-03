@@ -32,14 +32,14 @@ const HeaderNav = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
-              className="mx-auto my-2 my-lg-0 d-flex  align-items-center "
+              className="me-auto my-2 my-lg-0 d-flex  align-items-center"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Link href="/home" className="nav-link">
+              <Link href="/home" className="nav-link pt-0">
                 Home
               </Link>
-              <Link href="/home" className="nav-link">
+              <Link href="/home" className="nav-link pt-0">
                 Shop
               </Link>
 
