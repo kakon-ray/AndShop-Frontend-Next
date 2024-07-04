@@ -1,0 +1,24 @@
+#hot-products {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  #hot-products h1 {
+    text-transform: uppercase;
+    font-weight: 200;
+    color: #f79837;
+  }
+  .hot-menue {
+    margin: 2px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    box-sizing: border-box;
+    border-bottom: 3px solid transparent;
+  }
+  .active,
+  .hot-menue:hover {
+    color: #f79837;
+    cursor: pointer;
+    border-bottom: 3px solid #f79837;
+    box-sizing: border-box;
+  }
+  

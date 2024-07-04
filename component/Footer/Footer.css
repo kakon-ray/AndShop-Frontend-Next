@@ -1,0 +1,34 @@
+.flex-gap > icon {
+    margin: 6px;
+  }
+  
+  #footer {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .svg-inline--fa:hover {
+    color: #f79837;
+    cursor: pointer;
+  }
+  .footer-menue ul li {
+    list-style-type: none;
+    line-height: 2rem;
+  }
+  .footer-menue ul li:hover {
+    color: #f79837;
+    cursor: pointer;
+  }
+  .footer-menue h1 {
+    font-size: 20px;
+    margin-left: 10%;
+    font-weight: 600;
+    color: #f79837;
+  }
+  
+  .footer-subscription h1 {
+    margin-left: 0;
+    color: #f79837;
+    font-size: 20px;
+    padding-bottom: 5%;
+  }
+  
