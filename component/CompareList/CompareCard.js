@@ -35,7 +35,7 @@ const CompareCard = () => {
               style={{ height: "100px", overflow: "auto" }}
               className="d-flex align-items-center"
             >
-              <p>Comparelist description</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.Sapiente non expedita molestias at eveniet. Cupiditate accusamussoluta iste harum aspernatur?</p>
             </div>
 
             <div className="my-3">
