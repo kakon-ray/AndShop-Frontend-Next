@@ -51,35 +51,21 @@ const DashboardSidebar = () => {
               </MenuItem>
             </Menu>
           </Link>
-          <Link href="/profile">
+          <Link href="/dashboard/profile">
             <Menu iconShape="square">
               <MenuItem active={false} icon={<FiHome />}>
                 Profile
               </MenuItem>
             </Menu>
           </Link>
-          <Link href="/dashboard/mycartlist">
-            <Menu iconShape="square">
-              <MenuItem icon={<FaList />}>My Cartlist</MenuItem>
-            </Menu>
-          </Link>
-          <Link href="/dashboard/wishlist">
-            <Menu iconShape="square">
-              <MenuItem icon={<FaRegHeart />}>WishList</MenuItem>
-            </Menu>
-          </Link>
+
           <Link href="/dashboard/review">
             <Menu iconShape="square">
               <MenuItem icon={<RiPencilLine />}>Review And Shop</MenuItem>
             </Menu>
           </Link>
 
-          <Link href="/dashboard/comparelist">
-            <Menu iconShape="square">
-              <MenuItem icon={<BiCog />}>Compare List</MenuItem>
-            </Menu>
-          </Link>
-          <Link href="/dashboard/seller">
+          <Link href="/dashboard/sell">
             <Menu iconShape="square">
               <MenuItem icon={<BiCog />}>Sell On And Shop</MenuItem>
             </Menu>
