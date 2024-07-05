@@ -12,7 +12,8 @@ import { InputGroup, Button, FormControl } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <div className="container-fluid my-5" id="footer">
+    <div id="footer">
+       <div className="container-fluid">
       <div className="row">
         <div className="col-md-3">
           <h1>AND SHOP</h1>
@@ -71,6 +72,8 @@ const Footer = () => {
         </div>
       </div>
     </div>
+    </div>
+   
   );
 };
 

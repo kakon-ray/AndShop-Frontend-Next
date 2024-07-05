@@ -4,6 +4,8 @@
   
   #footer {
     font-family: "Poppins", sans-serif;
+    background-color: antiquewhite;
+    padding: 50px 0px;
   }
   
   .svg-inline--fa:hover {

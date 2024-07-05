@@ -7,7 +7,6 @@ import { faDashboard } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faSign } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "react-bootstrap";
 import styles from "./TopNavbar.module.css";
 
 const TopNavbar = () => {
@@ -44,17 +43,19 @@ const TopNavbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <button
-                    className="mx-3 my-2 top-btn"
-                    style={{
-                      padding: "0",
-                      border: "none",
-                      background: "none",
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faDashboard} className="me-1" />
-                    Dashboard
-                  </button>
+                  <Link href="/dashboard">
+                    <button
+                      className="mx-3 my-2 top-btn"
+                      style={{
+                        padding: "0",
+                        border: "none",
+                        background: "none",
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faDashboard} className="me-1" />
+                      Dashboard
+                    </button>
+                  </Link>
                 </li>
                 <li>
                   <Link href="/profile">
