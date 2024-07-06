@@ -19,6 +19,10 @@
     font-size: 14px;
     margin-left: 10px;
   }
+
+  .top-nav-btn{
+    text-decoration: none !important;
+  }
   
   @media only screen and (max-width: 690px) {
     .topNavContent {
