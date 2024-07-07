@@ -48,7 +48,7 @@ const TopNavbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/profile" className='top-nav-btn'>
+                  <Link href="/dashboard/profile" className='top-nav-btn'>
                     <button
 
                       className="mx-3 my-2 top-btn d-flex align-items-center gap-1"
