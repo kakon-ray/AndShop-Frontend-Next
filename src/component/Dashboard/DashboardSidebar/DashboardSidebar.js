@@ -26,18 +26,26 @@ import { BiCog } from "react-icons/bi";
 import "react-pro-sidebar/dist/css/styles.css";
 import "./DashboardSidebar.css";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { toast } from "react-toastify";
 
 const DashboardSidebar = () => {
 
       //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
-
+  const { push } = useRouter();
   //create a custom function that will change menucollapse state from false to true and true to false
   const menuIconClick = () => {
     //condition checking to change state from true to false and vice versa
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
   
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    toast('Log out')
+    push('/login');
+
+  }
 
   return (
     <div id="header">
@@ -73,7 +81,7 @@ const DashboardSidebar = () => {
         </SidebarContent>
         <SidebarFooter>
           <Menu iconShape="square">
-            <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
+            <MenuItem icon={<FiLogOut />} onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </SidebarFooter>
       </ProSidebar>

@@ -1,8 +1,9 @@
 "use client"
+import IsAuth from "@/src/component/IsAuth";
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 
-const page = () => {
+const Profile = () => {
   return (
     <div>
       <h1 className="my-3 text-secondary">My Profile</h1>
@@ -47,4 +48,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default IsAuth(Profile);

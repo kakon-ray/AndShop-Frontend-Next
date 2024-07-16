@@ -1,4 +1,5 @@
-
+"use client"
+import IsAuth from "@/src/component/IsAuth";
 
 const Dashboard = () => {
   return (
@@ -8,4 +9,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default IsAuth(Dashboard);
