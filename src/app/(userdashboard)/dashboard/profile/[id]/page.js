@@ -1,13 +1,25 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import IsAuth from "@/src/component/IsAuth";
 import { Button, Card, Form } from "react-bootstrap";
+import { useRouter } from 'next/navigation';
+import { useParams,redirect  } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux';
+import { showUser } from "@/src/redux/features/userDetailSlice";
 
 const EditProfile = () => {
+    const params = useParams()
+    const dispatch = useDispatch();
+    const {users} = useSelector((state) => state.users);
+
+    useEffect(() => {
+        dispatch(showUser(params.id))
+    }, [])
+    
     return (
         <div>
-            <div>
-                <h1 className="my-3 text-secondary">My Profile</h1>
+
+                <h1 className="my-3 text-secondary">Edit Profile</h1>
                 <Card className='p-3'>
                     <div className="row">
                         <div className="col-md-6">
@@ -16,6 +28,7 @@ const EditProfile = () => {
                                     type="text"
                                     name="name"
                                     placeholder="Enter Name"
+                                    defaultValue={users?.name}
                                     className="rounded-0 py-3"
                                 />
                             </Form.Group>
@@ -25,6 +38,7 @@ const EditProfile = () => {
                                 <Form.Control
                                     type="email"
                                     name="email"
+                                    defaultValue={users?.email}
                                     placeholder="Enter Email"
                                     className="rounded-0 py-3"
                                 />
@@ -34,8 +48,8 @@ const EditProfile = () => {
                             <Form.Group className="my-4">
                                 <Form.Select name="gender" className="rounded-0 py-3">
                                     <option value="">Open this select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Female" selected={users.gender == 'Female'}>Female</option>
+                                    <option value="Female" selected={users.gender == 'Male'}>Male</option>
                                 </Form.Select>
                             </Form.Group>
 
@@ -46,6 +60,7 @@ const EditProfile = () => {
                                 <Form.Control
                                     type="phone"
                                     name="phone"
+                                    defaultValue={users?.phone}
                                     placeholder="Enter Phone Number"
                                     className="rounded-0 py-3"
                                 />
@@ -56,6 +71,7 @@ const EditProfile = () => {
                                 <Form.Control
                                     type="text"
                                     name="address"
+                                    defaultValue={users?.address}
                                     placeholder="Enter Address"
                                     className="rounded-0 py-3"
                                 />
@@ -69,7 +85,7 @@ const EditProfile = () => {
                     </Button>
                 </Card>
 
-            </div >
+
         </div >
     );
 };

@@ -11,13 +11,13 @@ function IsAuth(Component) {
 
     useEffect(() => {
       // Retrieve user data from localStorage when component mounts
-      const storedUserData = JSON.parse(localStorage.getItem("token"));
+      const storedUserData = JSON.parse(localStorage.getItem("user"));
       setUserData(storedUserData);
     }, []);
 
     useEffect(() => {
       // Check if user data exists in localStorage when component mounts
-      const storedUserData = JSON.parse(localStorage.getItem("token"));
+      const storedUserData = JSON.parse(localStorage.getItem("user"));
 
       if (!storedUserData) {
         // If userData is not available, redirect to home page

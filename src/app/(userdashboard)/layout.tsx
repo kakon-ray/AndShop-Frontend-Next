@@ -6,6 +6,7 @@ import TopNavbar from '../../component/TopNavbar/TopNavbar'
 import Footer from '../../component/Footer/Footer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DashboardSidebar from "@/src/component/Dashboard/DashboardSidebar/DashboardSidebar";
+import { ReduxProvider } from "@/src/redux/provider"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,7 +33,7 @@ export default function RootLayout({
               </div>
             </div>
             <div className="col-md-10">
-              {children}
+              <ReduxProvider>{children}</ReduxProvider>
             </div>
           </div>
         </div>

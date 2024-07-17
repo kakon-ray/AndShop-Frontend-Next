@@ -35,7 +35,7 @@ const LoginCard = () => {
             const result = await response.json();
             console.log(result)
             if(result.success === true){
-                localStorage.setItem('token',JSON.stringify(result.token))
+                localStorage.setItem('user',JSON.stringify(result))
                  toast(result.msg)
                 push('/dashboard');
             }else{

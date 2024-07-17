@@ -1,9 +1,21 @@
 "use client"
 import IsAuth from "@/src/component/IsAuth";
-import React from "react";
+import { showUser } from "@/src/redux/features/userDetailSlice";
+import Link from "next/link";
+import React, { useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const dispatch = useDispatch();
+
+  const {users} = useSelector((state) => state.users);
+
+  useEffect(() => {
+      dispatch(showUser(user.id))
+  }, [])
+
   return (
     <div>
       <h1 className="my-3 text-secondary">My Profile</h1>
@@ -12,38 +24,38 @@ const Profile = () => {
           <div className="col-md-4">
             <Card.Body>
               <h5>Full Name</h5>
-              <p>Kakon Ray</p>
+              <p>{users.name}</p>
             </Card.Body>
             <Card.Body>
               <h5>Birthday</h5>
-              <p>Please enter your birthday</p>
+              <p>{user?.date_of_birth}</p>
             </Card.Body>
           </div>
           <div className="col-md-4">
             <Card.Body>
               <h5>Email Address </h5>
-              <p>kakonroy043@gmail.com</p>
+              <p>{user?.email}</p>
             </Card.Body>
             <Card.Body>
               <h5>Gender</h5>
-              <p>Please enter your Gender</p>
+              <p>{user?.gender}</p>
             </Card.Body>
           </div>
           <div className="col-md-4">
             <Card.Body>
               <h5>Phone Number</h5>
-              <p>01707500512</p>
+              <p>{user?.phone ? user.email : "Please Enter Your Phone Number"}</p>
             </Card.Body>
             <Card.Body>
               <h5>Address</h5>
-              <p>Please enter your shop Address</p>
+              <p>{user?.address}</p>
             </Card.Body>
           </div>
         </div>
       </Card>
-      <Button className="mt-4 btn btn-warning font-weight-bold">
+      <Link href={`/dashboard/profile/${user?.id}`} className="mt-4 btn btn-warning font-weight-bold">
         EDIT PROFILE
-      </Button>
+      </Link>
     </div>
   );
 };
