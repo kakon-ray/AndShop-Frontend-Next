@@ -38,6 +38,8 @@ const LoginCard = () => {
                 localStorage.setItem('token',JSON.stringify(result.token))
                  toast(result.msg)
                 push('/dashboard');
+            }else{
+                toast('Login Faild ')
             }
             
 
@@ -75,7 +77,7 @@ const LoginCard = () => {
                         <Button
                         
                             className="btn btn-warning w-100 py-3"
-                            style={{ backgroundColor: "#f79837", color: "#fff" }}
+                            style={{ backgroundColor: "#f79837", color: "#fff"}}
                             type="submit"
                         >
                             Login

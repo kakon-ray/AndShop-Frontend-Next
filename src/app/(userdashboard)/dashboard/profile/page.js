@@ -31,12 +31,12 @@ const Profile = () => {
           </div>
           <div className="col-md-4">
             <Card.Body>
-              <h5>Mobile</h5>
+              <h5>Phone Number</h5>
               <p>01707500512</p>
             </Card.Body>
             <Card.Body>
-              <h5>Birthday</h5>
-              <p>Please enter your birthday</p>
+              <h5>Address</h5>
+              <p>Please enter your shop Address</p>
             </Card.Body>
           </div>
         </div>
