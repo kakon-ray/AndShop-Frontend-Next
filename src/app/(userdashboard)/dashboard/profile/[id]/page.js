@@ -8,18 +8,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showUser, updateUserSubmit } from "@/src/redux/features/userDetailSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Image from 'next/image';
 
 const EditProfile = () => {
 
     const params = useParams()
     const dispatch = useDispatch();
+    
 
-    const  users  = useSelector((state) => state.users?.users);
+    const users = useSelector((state) => state.users?.users);
 
 
     useEffect(() => {
         dispatch(showUser(params.id))
-    }, [])
+    }, [dispatch, params.id])
 
 
     // submit create cateogry
@@ -33,6 +35,7 @@ const EditProfile = () => {
         formData.append("email", e.target.email.value ? e.target.email.value : users?.email);
         formData.append("gender", e.target.gender.value ? e.target.gender.value : users?.gender);
         formData.append("phone", e.target.phone.value ? e.target.phone.value : users?.phone);
+        formData.append("date_of_birth", e.target.date_of_birth.value ? e.target.date_of_birth.value : users?.date_of_birth);
         formData.append("address", e.target.address.value ? e.target.address.value : users?.address);
         formData.append("image", e.target.image.files[0] ? e.target.image.files[0] : "");
 
@@ -42,7 +45,7 @@ const EditProfile = () => {
 
     return (
         <div>
-       <ToastContainer/>
+            <ToastContainer />
             <h3 className="my-3 text-secondary text-center">Edit Profile From {users?.name}</h3>
 
 
@@ -50,7 +53,7 @@ const EditProfile = () => {
                 <Card className='p-3'>
                     <div className="row">
                         <div className="col-lg-2 mx-auto">
-                            <img src={users?.image} alt="User Photo" style={{width:'100px',height:'100px'}} className='rounded-circle' />
+                            <img src={users?.image} alt="User Photo" style={{ width: '100px', height: '100px' }} className='rounded-circle' />
                         </div>
                     </div>
                     <div className="row">
@@ -71,6 +74,7 @@ const EditProfile = () => {
                                     type="email"
                                     name="email"
                                     defaultValue={users?.email}
+                                    readOnly
                                     placeholder='Enter Email'
                                     className="rounded-0 py-3"
                                 />
@@ -94,6 +98,17 @@ const EditProfile = () => {
                                     name="phone"
                                     defaultValue={users?.phone}
                                     placeholder='Enter Phone'
+                                    className="rounded-0 py-3"
+                                />
+                            </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                            <Form.Group className="my-4">
+                                <Form.Control
+                                    type="date"
+                                    name="date_of_birth"
+                                    defaultValue={users?.date_of_birth}
+                                    placeholder='Enter Date of Birth'
                                     className="rounded-0 py-3"
                                 />
                             </Form.Group>

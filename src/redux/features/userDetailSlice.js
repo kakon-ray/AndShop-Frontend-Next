@@ -1,13 +1,12 @@
+"use client"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from 'react-toastify';
 
 
-const user = JSON.parse(localStorage.getItem('user'));
-const token = user?.token
-
 
 export const showUser = createAsyncThunk('showUser', async (args, { rejectWithValue }) => {
+    const token = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
     const response = await fetch(`http://127.0.0.1:8000/api/user/show/${args}`, {
         headers: {
             Authorization: 'Bearer' + ' ' + token,
@@ -22,7 +21,7 @@ export const showUser = createAsyncThunk('showUser', async (args, { rejectWithVa
 })
 
 export const updateUserSubmit = createAsyncThunk("updateUserSubmit", async (formData, { rejectWithValue }) => {
-
+    const token = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
     const response = await axios.post(
         'http://127.0.0.1:8000/api/user/update',
         formData,

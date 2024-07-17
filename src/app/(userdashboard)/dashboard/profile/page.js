@@ -7,13 +7,18 @@ import { Button, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
+
+
+  const temUser = localStorage.getItem('user');
+  const userid = JSON.parse(temUser)
+
+
   const dispatch = useDispatch();
 
-  const {users} = useSelector((state) => state.users);
+  const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
-      dispatch(showUser(user.id))
+    dispatch(showUser(userid.id))
   }, [])
 
   return (
@@ -24,36 +29,36 @@ const Profile = () => {
           <div className="col-md-4">
             <Card.Body>
               <h5>Full Name</h5>
-              <p>{users.name}</p>
+              <p>{users?.name}</p>
             </Card.Body>
             <Card.Body>
               <h5>Birthday</h5>
-              <p>{user?.date_of_birth}</p>
+              <p>{users?.date_of_birth}</p>
             </Card.Body>
           </div>
           <div className="col-md-4">
             <Card.Body>
               <h5>Email Address </h5>
-              <p>{user?.email}</p>
+              <p>{users?.email}</p>
             </Card.Body>
             <Card.Body>
               <h5>Gender</h5>
-              <p>{user?.gender}</p>
+              <p>{users?.gender}</p>
             </Card.Body>
           </div>
           <div className="col-md-4">
             <Card.Body>
               <h5>Phone Number</h5>
-              <p>{user?.phone ? user.email : "Please Enter Your Phone Number"}</p>
+              <p>{users?.phone ? users?.email : "Please Enter Your Phone Number"}</p>
             </Card.Body>
             <Card.Body>
               <h5>Address</h5>
-              <p>{user?.address}</p>
+              <p>{users?.address}</p>
             </Card.Body>
           </div>
         </div>
       </Card>
-      <Link href={`/dashboard/profile/${user?.id}`} className="mt-4 btn btn-warning font-weight-bold">
+      <Link href={`/dashboard/profile/${userid?.id}`} className="mt-4 btn btn-warning font-weight-bold">
         EDIT PROFILE
       </Link>
     </div>
