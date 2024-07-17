@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import { toast } from 'react-toastify';
+
 
 const user = JSON.parse(localStorage.getItem('user'));
 const token = user?.token
 
 
-export const showUser = createAsyncThunk('showCategory', async (args, { rejectWithValue }) => {
+export const showUser = createAsyncThunk('showUser', async (args, { rejectWithValue }) => {
     const response = await fetch(`http://127.0.0.1:8000/api/user/show/${args}`, {
         headers: {
             Authorization: 'Bearer' + ' ' + token,
@@ -19,37 +21,32 @@ export const showUser = createAsyncThunk('showCategory', async (args, { rejectWi
     }
 })
 
-export const updateUser = createAsyncThunk("updateCategory", async (data, { rejectWithValue }) => {
-    //   console.log(data)
-    const response = await fetch(
-        `http://127.0.0.1:8000/api/category/edit`,
+export const updateUserSubmit = createAsyncThunk("updateUserSubmit", async (formData, { rejectWithValue }) => {
+
+    const response = await axios.post(
+        'http://127.0.0.1:8000/api/user/update',
+        formData,
         {
-            method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Authorization: 'Bearer' + ' ' + token,
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(data),
         }
     );
 
     try {
-        const result = await response.json();
-        return result;
-
+        return response.data.user;
     } catch (error) {
         return rejectWithValue(error)
     }
 
-
-}
-);
+})
 
 
 const userDetail = createSlice({
     name: "userDetail",
     initialState: {
-        users: [],
+        users: {},
         loading: false,
         error: null,
     },
@@ -71,19 +68,18 @@ const userDetail = createSlice({
             })
 
             //   update category
-            .addCase(updateUser.pending, (state) => {
+            .addCase(updateUserSubmit.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(updateUser.fulfilled, (state, action) => {
-                console.log(action.payload.data)
+            .addCase(updateUserSubmit.fulfilled, (state, action) => {
                 state.loading = false;
                 state.users = action.payload
-                toast.success('Category update successfully!');
+                toast.success('User update successfully!');
             })
-            .addCase(updateUser.rejected, (state, action) => {
+            .addCase(updateUserSubmit.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-                toast.error('Failed to update Category!');
+                toast.error('Failed to update User!');
             })
 
     },

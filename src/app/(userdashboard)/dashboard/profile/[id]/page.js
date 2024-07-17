@@ -1,26 +1,58 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import IsAuth from "@/src/component/IsAuth";
 import { Button, Card, Form } from "react-bootstrap";
 import { useRouter } from 'next/navigation';
-import { useParams,redirect  } from 'next/navigation'
+import { useParams, redirect } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux';
-import { showUser } from "@/src/redux/features/userDetailSlice";
+import { showUser, updateUserSubmit } from "@/src/redux/features/userDetailSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditProfile = () => {
+
     const params = useParams()
     const dispatch = useDispatch();
-    const {users} = useSelector((state) => state.users);
+
+    const  users  = useSelector((state) => state.users?.users);
+
 
     useEffect(() => {
         dispatch(showUser(params.id))
     }, [])
-    
+
+
+    // submit create cateogry
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+
+        formData.append("id", params.id);
+        formData.append("name", e.target.name.value ? e.target.name.value : users?.name);
+        formData.append("email", e.target.email.value ? e.target.email.value : users?.email);
+        formData.append("gender", e.target.gender.value ? e.target.gender.value : users?.gender);
+        formData.append("phone", e.target.phone.value ? e.target.phone.value : users?.phone);
+        formData.append("address", e.target.address.value ? e.target.address.value : users?.address);
+        formData.append("image", e.target.image.files[0] ? e.target.image.files[0] : "");
+
+        dispatch(updateUserSubmit(formData))
+
+    }
+
     return (
         <div>
+       <ToastContainer/>
+            <h3 className="my-3 text-secondary text-center">Edit Profile From {users?.name}</h3>
 
-                <h1 className="my-3 text-secondary">Edit Profile</h1>
+
+            <form onSubmit={handleSubmit}>
                 <Card className='p-3'>
+                    <div className="row">
+                        <div className="col-lg-2 mx-auto">
+                            <img src={users?.image} alt="User Photo" style={{width:'100px',height:'100px'}} className='rounded-circle' />
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-6">
                             <Form.Group className="my-4">
@@ -39,7 +71,7 @@ const EditProfile = () => {
                                     type="email"
                                     name="email"
                                     defaultValue={users?.email}
-                                    placeholder="Enter Email"
+                                    placeholder='Enter Email'
                                     className="rounded-0 py-3"
                                 />
                             </Form.Group>
@@ -48,8 +80,8 @@ const EditProfile = () => {
                             <Form.Group className="my-4">
                                 <Form.Select name="gender" className="rounded-0 py-3">
                                     <option value="">Open this select Gender</option>
-                                    <option value="Female" selected={users.gender == 'Female'}>Female</option>
-                                    <option value="Female" selected={users.gender == 'Male'}>Male</option>
+                                    <option value="Female" selected={users?.gender == 'Female'}>Female</option>
+                                    <option value="Male" selected={users?.gender == 'Male'}>Male</option>
                                 </Form.Select>
                             </Form.Group>
 
@@ -61,7 +93,7 @@ const EditProfile = () => {
                                     type="phone"
                                     name="phone"
                                     defaultValue={users?.phone}
-                                    placeholder="Enter Phone Number"
+                                    placeholder='Enter Phone'
                                     className="rounded-0 py-3"
                                 />
                             </Form.Group>
@@ -72,18 +104,30 @@ const EditProfile = () => {
                                     type="text"
                                     name="address"
                                     defaultValue={users?.address}
-                                    placeholder="Enter Address"
+                                    placeholder='Enter Address'
+                                    className="rounded-0 py-3"
+                                />
+                            </Form.Group>
+                        </div>
+
+                        <div className="col-md-6">
+                            <Form.Group className="my-4">
+                                <Form.Control
+                                    type="file"
+                                    name="image"
+                                    placeholder='Enter Address'
                                     className="rounded-0 py-3"
                                 />
                             </Form.Group>
                         </div>
 
                     </div>
-                  
-                    <Button className="mt-4 btn btn-warning font-weight-bold w-25">
+
+                    <Button className="my-4 btn btn-warning font-weight-bold w-25 mx-auto" type='submit'>
                         Update Submit
                     </Button>
                 </Card>
+            </form>
 
 
         </div >

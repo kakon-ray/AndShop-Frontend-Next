@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DashboardSidebar from "@/src/component/Dashboard/DashboardSidebar/DashboardSidebar";
 import { ReduxProvider } from "@/src/redux/provider"
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
