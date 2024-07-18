@@ -1,3 +1,4 @@
+
 "use client"
 import IsAuth from "@/src/component/IsAuth";
 import { showUser } from "@/src/redux/features/userDetailSlice";
@@ -22,9 +23,14 @@ const Profile = () => {
   }, [])
 
   return (
-    <div>
-      <h1 className="my-3 text-secondary">My Profile</h1>
+    <div className="my-4">
+
       <Card>
+        <div className="row pb-5">
+          <div className="col-lg-2 mx-auto">
+            <img src={users?.image} alt="User Photo" style={{ width: '150px', height: '150px' }} />
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-4">
             <Card.Body>
@@ -57,10 +63,11 @@ const Profile = () => {
             </Card.Body>
           </div>
         </div>
+        <Link href={`/dashboard/profile/${userid?.id}`} className="mt-4 btn btn-warning font-weight-bold">
+          EDIT PROFILE
+        </Link>
       </Card>
-      <Link href={`/dashboard/profile/${userid?.id}`} className="mt-4 btn btn-warning font-weight-bold">
-        EDIT PROFILE
-      </Link>
+
     </div>
   );
 };

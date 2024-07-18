@@ -34,14 +34,18 @@ const LoginCard = () => {
         try {
             const result = await response.json();
             console.log(result)
-            if(result.success === true){
-                localStorage.setItem('user',JSON.stringify(result))
-                 toast(result.msg)
-                push('/dashboard');
-            }else{
+            if (result.success === true) {
+                localStorage.setItem('user', JSON.stringify(result))
+                toast(result.msg)
+                const timer = setTimeout(() => {
+                    push('/dashboard');
+                }, 1000);
+                return () => clearTimeout(timer);
+               
+            } else {
                 toast('Login Faild ')
             }
-            
+
 
         } catch (error) {
             console.log(error)
@@ -75,9 +79,9 @@ const LoginCard = () => {
                         </Form.Group>
 
                         <Button
-                        
+
                             className="btn btn-warning w-100 py-3"
-                            style={{ backgroundColor: "#f79837", color: "#fff"}}
+                            style={{ backgroundColor: "#f79837", color: "#fff" }}
                             type="submit"
                         >
                             Login

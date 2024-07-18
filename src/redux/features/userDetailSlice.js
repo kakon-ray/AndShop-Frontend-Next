@@ -34,13 +34,34 @@ export const updateUserSubmit = createAsyncThunk("updateUserSubmit", async (form
     );
 
     try {
-        return response.data.user;
+        return response.data;
     } catch (error) {
         return rejectWithValue(error)
     }
 
 })
 
+
+export const updateUserRoleRequestSubmit = createAsyncThunk("updateUserRoleRequestSubmit", async (formData, { rejectWithValue }) => {
+    const token = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
+    const response = await axios.post(
+        'http://127.0.0.1:8000/api/user/role/request/submit',
+        formData,
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    try {
+        return response.data;
+    } catch (error) {
+        return rejectWithValue(error)
+    }
+
+})
 
 const userDetail = createSlice({
     name: "userDetail",
@@ -66,19 +87,44 @@ const userDetail = createSlice({
                 state.error = action.error.message;
             })
 
-            //   update category
+            //   update user
             .addCase(updateUserSubmit.pending, (state) => {
                 state.loading = true;
             })
             .addCase(updateUserSubmit.fulfilled, (state, action) => {
                 state.loading = false;
-                state.users = action.payload
-                toast.success('User update successfully!');
+                if(action.payload.success == true){
+                    state.users = action.payload.user
+                    toast.success(action.payload.msg);
+                }else{
+                    toast.error(action.payload.msg);
+                }
+                
             })
             .addCase(updateUserSubmit.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
                 toast.error('Failed to update User!');
+            })
+
+            //   update updateUserRoleRequestSubmit
+            .addCase(updateUserRoleRequestSubmit.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(updateUserRoleRequestSubmit.fulfilled, (state, action) => {
+                state.loading = false;
+                if(action.payload.success == true){
+                    state.users = action.payload.user
+                    toast.success(action.payload.msg);
+                }else{
+                    toast.error(action.payload.msg);
+                }
+                
+            })
+            .addCase(updateUserRoleRequestSubmit.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+                toast.error('Failed to Request User!');
             })
 
     },

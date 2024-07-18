@@ -46,19 +46,18 @@ const EditProfile = () => {
     return (
         <div>
             <ToastContainer />
-            <h3 className="my-3 text-secondary text-center">Edit Profile From {users?.name}</h3>
-
-
+         
             <form onSubmit={handleSubmit}>
                 <Card className='p-3'>
                     <div className="row">
                         <div className="col-lg-2 mx-auto">
-                            <img src={users?.image} alt="User Photo" style={{ width: '100px', height: '100px' }} className='rounded-circle' />
+                            <img src={users?.image} alt="User Photo" style={{ width: '140px', height: '140px' }} className='rounded-circle' />
+                            <h3 className="py-2 text-secondary text-center">Edit Profile</h3>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6">
-                            <Form.Group className="my-4">
+                        <div className="col-md-4">
+                            <Form.Group className="my-3">
                                 <Form.Control
                                     type="text"
                                     name="name"
@@ -68,8 +67,8 @@ const EditProfile = () => {
                                 />
                             </Form.Group>
                         </div>
-                        <div className="col-md-6">
-                            <Form.Group className="my-4">
+                        <div className="col-md-4">
+                            <Form.Group className="my-3">
                                 <Form.Control
                                     type="email"
                                     name="email"
@@ -80,8 +79,8 @@ const EditProfile = () => {
                                 />
                             </Form.Group>
                         </div>
-                        <div className="col-md-6">
-                            <Form.Group className="my-4">
+                        <div className="col-md-4">
+                            <Form.Group className="my-3">
                                 <Form.Select name="gender" className="rounded-0 py-3">
                                     <option value="">Open this select Gender</option>
                                     <option value="Female" selected={users?.gender == 'Female'}>Female</option>
@@ -91,8 +90,8 @@ const EditProfile = () => {
 
 
                         </div>
-                        <div className="col-md-6">
-                            <Form.Group className="my-4">
+                        <div className="col-md-4">
+                            <Form.Group className="my-3">
                                 <Form.Control
                                     type="phone"
                                     name="phone"
@@ -102,8 +101,8 @@ const EditProfile = () => {
                                 />
                             </Form.Group>
                         </div>
-                        <div className="col-md-6">
-                            <Form.Group className="my-4">
+                        <div className="col-md-4">
+                            <Form.Group className="my-3">
                                 <Form.Control
                                     type="date"
                                     name="date_of_birth"
@@ -113,8 +112,8 @@ const EditProfile = () => {
                                 />
                             </Form.Group>
                         </div>
-                        <div className="col-md-6">
-                            <Form.Group className="my-4">
+                        <div className="col-md-4">
+                            <Form.Group className="my-3">
                                 <Form.Control
                                     type="text"
                                     name="address"
@@ -125,8 +124,8 @@ const EditProfile = () => {
                             </Form.Group>
                         </div>
 
-                        <div className="col-md-6">
-                            <Form.Group className="my-4">
+                        <div className="col-md-4">
+                            <Form.Group className="my-3">
                                 <Form.Control
                                     type="file"
                                     name="image"
@@ -138,7 +137,7 @@ const EditProfile = () => {
 
                     </div>
 
-                    <Button className="my-4 btn btn-warning font-weight-bold w-25 mx-auto" type='submit'>
+                    <Button className="btn btn-warning font-weight-bold w-25 mx-auto" type='submit'>
                         Update Submit
                     </Button>
                 </Card>
