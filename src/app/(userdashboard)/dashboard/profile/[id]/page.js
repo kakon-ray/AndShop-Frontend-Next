@@ -9,12 +9,14 @@ import { showUser, updateUserSubmit } from "@/src/redux/features/userDetailSlice
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
+import { FaCamera } from 'react-icons/fa';
+import "../Profile.css"
 
 const EditProfile = () => {
 
     const params = useParams()
     const dispatch = useDispatch();
-    
+
 
     const users = useSelector((state) => state.users?.users);
 
@@ -46,14 +48,20 @@ const EditProfile = () => {
     return (
         <div>
             <ToastContainer />
-         
+
             <form onSubmit={handleSubmit}>
                 <Card className='p-3'>
                     <div className="row">
-                        <div className="col-lg-2 mx-auto">
-                            <img src={users?.image} alt="User Photo" style={{ width: '140px', height: '140px' }} className='rounded-circle' />
-                            <h3 className="py-2 text-secondary text-center">Edit Profile</h3>
-                        </div>
+                        <label htmlFor="upload_profile">
+                            <div className="col-lg-2 mx-auto position-relative">
+                                <img src={users?.image} alt="User Photo" style={{ width: '140px', height: '140px' }} className='rounded-circle' />
+                                <h3 className="py-2 text-secondary text-center">Edit Profile</h3>
+                                <FaCamera
+                                    style={{ color: "#f79837", width: "17px" }}
+                                    className="profile_image_upload"
+                                />
+                            </div>
+                        </label>
                     </div>
                     <div className="row">
                         <div className="col-md-4">
@@ -129,6 +137,7 @@ const EditProfile = () => {
                                 <Form.Control
                                     type="file"
                                     name="image"
+                                    id="upload_profile"
                                     placeholder='Enter Address'
                                     className="rounded-0 py-3"
                                 />
