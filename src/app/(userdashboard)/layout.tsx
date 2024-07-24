@@ -28,12 +28,12 @@ export default function RootLayout({
         <HeaderNav />
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-2">
+            <div className="col-md-3">
               <div className="dashboard-lg-sidebar">
                 <DashboardSidebar />
               </div>
             </div>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <ReduxProvider>{children}</ReduxProvider>
             </div>
           </div>

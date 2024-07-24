@@ -31,7 +31,7 @@ import { toast } from "react-toastify";
 
 const DashboardSidebar = () => {
 
-      //create initial menuCollapse state using useState hook
+  //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
   const { push } = useRouter();
   //create a custom function that will change menucollapse state from false to true and true to false
@@ -39,7 +39,7 @@ const DashboardSidebar = () => {
     //condition checking to change state from true to false and vice versa
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
-  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     toast('Log out')
@@ -67,17 +67,25 @@ const DashboardSidebar = () => {
             </Menu>
           </Link>
 
-          <Link href="/dashboard/review" className="navmenue">
+          <Link href="/dashboard/sell" className="navmenue">
             <Menu iconShape="square">
-              <MenuItem icon={<RiPencilLine />}>Review And Shop</MenuItem>
+              <MenuItem icon={<BiCog />}>Vendor Request</MenuItem>
             </Menu>
           </Link>
 
-          <Link href="/dashboard/sell" className="navmenue">
+          <Link href="/dashboard/product" className="navmenue">
             <Menu iconShape="square">
-              <MenuItem icon={<BiCog />}>Sell On And Shop</MenuItem>
+              <MenuItem icon={<BiCog />}>Manage Product</MenuItem>
             </Menu>
           </Link>
+
+          <Link href="/dashboard/review" className="navmenue">
+            <Menu iconShape="square">
+              <MenuItem icon={<RiPencilLine />}>Review on And Shop</MenuItem>
+            </Menu>
+          </Link>
+
+
         </SidebarContent>
         <SidebarFooter>
           <Menu iconShape="square">
