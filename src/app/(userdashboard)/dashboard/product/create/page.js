@@ -4,12 +4,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Dropzone from 'dropzone';
 import 'dropzone/dist/dropzone.css';
+import { createProduct } from '../../../../../redux/features/productDetailsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddProduct = () => {
 
-
+    const [product, setProduct] = useState({});
     const dropzoneRef = useRef(null);
-    let ProductImage = [];
+    const [productImage, setProductImage] = useState([]);
+    const dispatch = useDispatch();
+
+    const temUser = localStorage.getItem('user');
+    const userid = JSON.parse(temUser)
 
     useEffect(() => {
         // Initialize Dropzone
@@ -24,14 +32,11 @@ const AddProduct = () => {
             init: function () {
                 this.on("success", function (file, response) {
                     console.log("File uploaded successfully");
-                    response.name.map(item => {
-                       
-                        const containsItem = ProductImage.includes(item);
-                        if(!containsItem){
-                            ProductImage.push(item)
-                        }
-                    })
-                    console.log(ProductImage)
+                    setProductImage(prevImages => {
+                        const newImages = response.name.filter(item => !prevImages.includes(item));
+                        return [...prevImages, ...newImages];
+                    });
+                    // console.log(ProductImage)
                 });
                 this.on("error", function (file, response) {
                     console.log("File upload error");
@@ -45,12 +50,23 @@ const AddProduct = () => {
         };
     }, []);
 
-    
+    const getProduct = (e) => {
+        setProduct({ ...product, [e.target.name]: e.target.value })
+    }
 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        product.images = productImage
+        product.thumbnail = productImage.slice(1)[0]
+        product.vendor_id = userid.id
+        dispatch(createProduct(product))
+
+    }
 
     return (
         <div className='container-fluid'>
-
+            <ToastContainer />
             <div className="d-flex justify-content-between py-4">
                 <h2>Create Product</h2>
                 <Link href='/dashboard/product'>
@@ -61,62 +77,56 @@ const AddProduct = () => {
             <div className='row'>
 
                 <div className='col-lg-12'>
-                    <form method="POST" action="" enctype="multipart/form-data">
+                    <form onSubmit={handleSubmit}>
                         <div className="row pb-3">
 
                             <div class="col-lg-6 py-2">
                                 <label>Product Name</label>
-                                <input required type="text" class="form-control" name="name" placeholder="Product Name" />
+                                <input required type="text" class="form-control" name="name" placeholder="Product Name" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Category</label>
-                                <input required type="text" class="form-control" name="category_id" placeholder="Category" />
+                                <input required type="text" class="form-control" name="category" placeholder="Category" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Sub Category</label>
-                                <input required type="text" class="form-control" name="subcategory_id" placeholder="Category" />
+                                <input required type="text" class="form-control" name="subcategory" placeholder="Category" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Product Code </label>
-                                <input required type="text" class="form-control" name="code" placeholder="Product Code" />
+                                <input required type="text" class="form-control" name="code" placeholder="Product Code" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Product Tags </label>
-                                <input required type="text" class="form-control" name="tags" placeholder="Product Tags" />
+                                <input required type="text" class="form-control" name="tags" placeholder="Product Tags" onChange={getProduct} />
                             </div>
                             <div class="col-lg-3 py-2">
                                 <label>Purchase Price</label>
-                                <input required type="text" class="form-control" name="purchase_price" placeholder="Purchase Price" />
+                                <input required type="text" class="form-control" name="purchase_price" placeholder="Purchase Price" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Selling Price</label>
-                                <input required type="text" class="form-control" name="selling_price" placeholder="Selling Price" />
+                                <input required type="text" class="form-control" name="selling_price" placeholder="Selling Price" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Discount Price</label>
-                                <input required type="text" class="form-control" name="discount_price" placeholder="Discount Price" />
+                                <input required type="text" class="form-control" name="discount_price" placeholder="Discount Price" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Stock Quantity</label>
-                                <input required type="text" class="form-control" name="stock_quantity" placeholder="Stock Quantity" />
-                            </div>
-
-
-                            <div class="col-lg-3 py-2">
-                                <label>Admin id</label>
-                                <input required type="text" class="form-control" name="admin_id" placeholder="Admin id" />
+                                <input required type="text" class="form-control" name="stock_quantity" placeholder="Stock Quantity" onChange={getProduct} />
                             </div>
 
                             <div class="col-lg-12 py-2">
                                 <label>Description</label>
-                                <textarea name="description" class="form-control" id=""></textarea>
+                                <textarea name="description" class="form-control" onChange={getProduct}></textarea>
                             </div>
 
                             <div class="col-lg-12 py-2">
