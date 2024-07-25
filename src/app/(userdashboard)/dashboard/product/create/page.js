@@ -1,23 +1,37 @@
 
 "use client"
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Dropzone from 'dropzone';
 import 'dropzone/dist/dropzone.css';
 
 const AddProduct = () => {
 
+
     const dropzoneRef = useRef(null);
+    let ProductImage = [];
 
     useEffect(() => {
         // Initialize Dropzone
         const dz = new Dropzone(dropzoneRef.current, {
-            url: '/api/upload', // Change this to your upload endpoint
-            maxFilesize: 2, // MB
+            url: 'http://127.0.0.1:8000/api/upload-images', // Change this to your upload endpoint
+            maxFilesize: 10, // MB
             acceptedFiles: 'image/*',
+            autoProcessQueue: true,
+            uploadMultiple: true,
+            addRemoveLinks: true,
+            parallelUploads: 10,
             init: function () {
                 this.on("success", function (file, response) {
                     console.log("File uploaded successfully");
+                    response.name.map(item => {
+                       
+                        const containsItem = ProductImage.includes(item);
+                        if(!containsItem){
+                            ProductImage.push(item)
+                        }
+                    })
+                    console.log(ProductImage)
                 });
                 this.on("error", function (file, response) {
                     console.log("File upload error");
@@ -30,6 +44,8 @@ const AddProduct = () => {
             dz.destroy();
         };
     }, []);
+
+    
 
 
     return (
