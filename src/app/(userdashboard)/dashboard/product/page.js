@@ -1,10 +1,12 @@
 
 "use client"
-import { showProduct } from '@/src/redux/features/productDetailsSlice';
+import { deleteProduct, showProduct } from '@/src/redux/features/productDetailsSlice';
 import { showUser } from '@/src/redux/features/userDetailSlice';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ManageProduct = () => {
@@ -24,12 +26,17 @@ const ManageProduct = () => {
     const { products } = useSelector((state) => state.products);
 
     useEffect(() => {
-        dispatch(showProduct(users.id))
+        dispatch(showProduct(users?.id))
     }, [users])
+
+    const handleDelete = (id) => {
+       dispatch(deleteProduct(id))
+    }
 
 
     return (
         <div className='container-fluid'>
+            <ToastContainer />
             <div className="d-flex justify-content-between py-4">
                 <h2>Manage Product</h2>
                 <Link href='/dashboard/product/create'>
@@ -69,7 +76,7 @@ const ManageProduct = () => {
                                     <td class="th-sm d-flex gap-3">
                                         <Link href={`/dashboard/product/edit/${item.id}`}
                                             class="btn btn-info btn-circle btn-sm">Edit</Link>
-                                        <a type="button" class="btn btn-danger btn-circle btn-sm">Delete</a>
+                                        <a type="button" class="btn btn-danger btn-circle btn-sm" onClick={()=>handleDelete(item.id)}>Delete</a>
                                     </td>
 
                                 </tr>
