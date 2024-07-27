@@ -88,7 +88,7 @@ const UpdateProduct = () => {
     }, []);
 
     const getProduct = (e) => {
-        setProduct({ ...product, [e.target.name]: e.target.value })
+        setProduct({ ...singleProduct, [e.target.name]: e.target.value })
     }
 
 
@@ -128,7 +128,7 @@ const UpdateProduct = () => {
                                 <select class="form-select" name="category" aria-label="Default select example" onChange={getProduct}>
                                     <option selected>Open this select category</option>
                                     {categories?.map(item => {
-                                        return <option value={item?.id} key={item?.id}>{item?.category_name}</option>
+                                        return <option value={item?.id} key={item?.id} selected={item?.id == singleProduct?.category_id}>{item?.category_name}</option>
                                     })}
                                     
                                 </select>
@@ -139,7 +139,7 @@ const UpdateProduct = () => {
                                 <select class="form-select" name="subcategory" aria-label="Default select example" onChange={getProduct}> 
                                     <option selected>Open this select category</option>
                                     {subcategories?.map(item => {
-                                        return <option value={item?.id} key={item?.id}>{item?.subcategory_name}</option>
+                                        return <option value={item?.id} key={item?.id} selected={item?.id == singleProduct?.subcategory_id}>{item?.subcategory_name}</option>
                                     })}
                                     
                                 </select>
