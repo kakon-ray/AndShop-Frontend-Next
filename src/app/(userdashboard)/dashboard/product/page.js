@@ -61,7 +61,7 @@ const ManageProduct = () => {
                                     <td class="th-sm text-center">{item?.discount_price}</td>
                                     <td class="th-sm text-center">{item?.stock_quantity}</td>
                                     <td class="th-sm d-flex gap-3">
-                                        <Link href="/dashboard/product/edit"
+                                        <Link href={`/dashboard/product/edit/${item.id}`}
                                             class="btn btn-info btn-circle btn-sm">Edit</Link>
                                         <a type="button" class="btn btn-danger btn-circle btn-sm">Delete</a>
                                     </td>
