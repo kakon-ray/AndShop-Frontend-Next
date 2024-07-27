@@ -73,19 +73,41 @@ const UpdateProduct = () => {
                         const newImages = response.name.filter(item => !prevImages.includes(item));
                         return [...prevImages, ...newImages];
                     });
-                    // console.log(ProductImage)
                 });
                 this.on("error", function (file, response) {
                     console.log("File upload error");
                 });
+    
+                // Avoid adding duplicate images
+                const addedFiles = new Set();
+                if (singleProduct?.images && singleProduct?.images.length > 0) {
+                    singleProduct.images.forEach(imageUrl => {
+                        if (!addedFiles.has(imageUrl)) {
+                            addedFiles.add(imageUrl);
+                            let mockFile = { name: imageUrl, size: 12345 }; // Use actual file size if available
+                            this.emit("addedfile", mockFile);
+                            this.emit("thumbnail", mockFile, imageUrl);
+                            this.emit("complete", mockFile);
+                           
+                        }
+                    });
+                    setProductImage(singleProduct.images.map(imageUrl => {
+                        try {
+                            const url = new URL(imageUrl, 'http://127.0.0.1:8000');
+                            return url.pathname.split('/').pop();
+                        } catch (error) {
+                            return imageUrl;
+                        }
+                    }));
+                }
             }
         });
-
+    
         // Cleanup Dropzone on component unmount
         return () => {
             dz.destroy();
         };
-    }, []);
+    }, [singleProduct]);
 
     const getProduct = (e) => {
         setProduct({ ...singleProduct, [e.target.name]: e.target.value })
@@ -98,7 +120,7 @@ const UpdateProduct = () => {
         product.thumbnail = productImage.slice(1)[0]
         product.vendor_id = users?.id
         dispatch(createProduct(product))
-        console.log(product)
+        console.log(productImage)
     }
 
     return (
