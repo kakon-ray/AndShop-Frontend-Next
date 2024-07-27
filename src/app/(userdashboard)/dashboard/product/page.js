@@ -9,8 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const ManageProduct = () => {
 
-
-
     const dispatch = useDispatch();
 
     // start get user
@@ -20,6 +18,8 @@ const ManageProduct = () => {
         dispatch(showUser())
     }, [])
     // end get user
+
+
 
     const { products } = useSelector((state) => state.products);
 

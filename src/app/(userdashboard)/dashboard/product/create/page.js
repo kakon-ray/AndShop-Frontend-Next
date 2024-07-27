@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showUser } from '@/src/redux/features/userDetailSlice';
+import { showCategory } from '@/src/redux/features/categoryDetailSlice';
+import { showSubcategory } from '@/src/redux/features/subCategoryDetailSlice';
 
 const AddProduct = () => {
 
@@ -24,6 +26,22 @@ const AddProduct = () => {
         dispatch(showUser())
     }, [])
     // end get user
+
+    // start get category
+    const { categories } = useSelector((state) => state.categories);
+
+    useEffect(() => {
+        dispatch(showCategory())
+    }, [])
+    // end get category
+
+    // start get subcategory
+    const { subcategories } = useSelector((state) => state.subcategories);
+
+    useEffect(() => {
+        dispatch(showSubcategory())
+    }, [])
+    // end get subcategory
 
     useEffect(() => {
         // Initialize Dropzone
@@ -93,12 +111,24 @@ const AddProduct = () => {
 
                             <div class="col-lg-3 py-2">
                                 <label>Category</label>
-                                <input required type="text" class="form-control" name="category" placeholder="Category" onChange={getProduct} />
+                                <select class="form-select" name="category" aria-label="Default select example" onChange={getProduct}>
+                                    <option selected>Open this select category</option>
+                                    {categories?.map(item => {
+                                        return <option value={item?.id} key={item?.id}>{item?.category_name}</option>
+                                    })}
+
+                                </select>
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Sub Category</label>
-                                <input required type="text" class="form-control" name="subcategory" placeholder="Category" onChange={getProduct} />
+                                <select class="form-select" name="subcategory" aria-label="Default select example" onChange={getProduct}>
+                                    <option selected>Open this select category</option>
+                                    {subcategories?.map(item => {
+                                        return <option value={item?.id} key={item?.id}>{item?.subcategory_name}</option>
+                                    })}
+
+                                </select>
                             </div>
 
                             <div class="col-lg-3 py-2">

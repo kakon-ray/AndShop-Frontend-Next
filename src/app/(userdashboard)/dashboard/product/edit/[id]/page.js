@@ -10,6 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'next/navigation';
 import { showUser } from '@/src/redux/features/userDetailSlice';
+import { showSubcategory } from '../../../../../../redux/features/subCategoryDetailSlice';
+import { showCategory } from '../../../../../../redux/features/categoryDetailSlice';
 
 const UpdateProduct = () => {
 
@@ -18,20 +20,36 @@ const UpdateProduct = () => {
     const [productImage, setProductImage] = useState([]);
     const dispatch = useDispatch();
     const params = useParams()
-   
-      // start get user
-      const { users } = useSelector((state) => state.users);
 
-      useEffect(() => {
-          dispatch(showUser())
-      }, [])
-      // end get user
+    // start get user
+    const { users } = useSelector((state) => state.users);
 
-    const {products} = useSelector((state) => state.products);
-    console.log(products)
+    useEffect(() => {
+        dispatch(showUser())
+    }, [])
+    // end get user
+
+    // start get category
+    const { categories } = useSelector((state) => state.categories);
+    
+    useEffect(() => {
+        dispatch(showCategory())
+    }, [])
+    // end get category
+
+    // start get subcategory
+    const { subcategories } = useSelector((state) => state.subcategories);
+
+    useEffect(() => {
+        dispatch(showSubcategory())
+    }, [])
+    // end get subcategory
+
+
+
+    const { products } = useSelector((state) => state.products);
 
     const singleProduct = products?.filter(item => item.id == params.id ? item : "")[0]
-    console.log(singleProduct)
 
     useEffect(() => {
         dispatch(showProduct(users?.id))
@@ -104,14 +122,27 @@ const UpdateProduct = () => {
                                 <input required type="text" class="form-control" name="name" placeholder="Product Name" value={singleProduct?.name} onChange={getProduct} />
                             </div>
 
+
                             <div class="col-lg-3 py-2">
                                 <label>Category</label>
-                                <input required type="text" class="form-control" name="category" placeholder="Category" value={singleProduct?.Category} onChange={getProduct} />
+                                <select class="form-select" name="category" aria-label="Default select example" onChange={getProduct}>
+                                    <option selected>Open this select category</option>
+                                    {categories?.map(item => {
+                                        return <option value={item?.id} key={item?.id}>{item?.category_name}</option>
+                                    })}
+                                    
+                                </select>
                             </div>
 
                             <div class="col-lg-3 py-2">
                                 <label>Sub Category</label>
-                                <input required type="text" class="form-control" name="subcategory" placeholder="Subcategory" value={singleProduct?.subcategory} onChange={getProduct} />
+                                <select class="form-select" name="subcategory" aria-label="Default select example" onChange={getProduct}> 
+                                    <option selected>Open this select category</option>
+                                    {subcategories?.map(item => {
+                                        return <option value={item?.id} key={item?.id}>{item?.subcategory_name}</option>
+                                    })}
+                                    
+                                </select>
                             </div>
 
                             <div class="col-lg-3 py-2">
