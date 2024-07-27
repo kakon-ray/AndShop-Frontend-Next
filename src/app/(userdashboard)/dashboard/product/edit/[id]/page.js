@@ -210,7 +210,7 @@ const UpdateProduct = () => {
 
                         </div>
 
-                        <button type="submit" class="btn btn-warning">
+                        <button type="submit" class="btn btn-warning mb-4">
                             Submit
                         </button>
 

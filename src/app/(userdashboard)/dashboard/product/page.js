@@ -4,6 +4,7 @@ import { deleteProduct, showProduct } from '@/src/redux/features/productDetailsS
 import { showUser } from '@/src/redux/features/userDetailSlice';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
+import { BiEdit, BiTrash } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -75,8 +76,8 @@ const ManageProduct = () => {
                                     <td class="th-sm text-center">{item?.stock_quantity}</td>
                                     <td class="th-sm d-flex gap-3">
                                         <Link href={`/dashboard/product/edit/${item.id}`}
-                                            class="btn btn-info btn-circle btn-sm">Edit</Link>
-                                        <a type="button" class="btn btn-danger btn-circle btn-sm" onClick={()=>handleDelete(item.id)}>Delete</a>
+                                            class="btn btn-info btn-circle btn-sm rounded-circle"> <BiEdit /></Link>
+                                        <a type="button" class="btn btn-danger btn-circle btn-sm rounded-circle" onClick={()=>handleDelete(item.id)}> <BiTrash /></a>
                                     </td>
 
                                 </tr>
