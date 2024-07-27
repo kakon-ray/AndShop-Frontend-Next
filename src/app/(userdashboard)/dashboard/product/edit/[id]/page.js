@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'next/navigation';
+import { showUser } from '@/src/redux/features/userDetailSlice';
 
 const UpdateProduct = () => {
 
@@ -16,20 +17,25 @@ const UpdateProduct = () => {
     const dropzoneRef = useRef(null);
     const [productImage, setProductImage] = useState([]);
     const dispatch = useDispatch();
-
-    const temUser = localStorage.getItem('user');
-    const userid = JSON.parse(temUser)
     const params = useParams()
+   
+      // start get user
+      const { users } = useSelector((state) => state.users);
+
+      useEffect(() => {
+          dispatch(showUser())
+      }, [])
+      // end get user
 
     const {products} = useSelector((state) => state.products);
+    console.log(products)
 
-    const singleProduct = products.filter(item => item.id == params.id ? item : "")[0]
+    const singleProduct = products?.filter(item => item.id == params.id ? item : "")[0]
     console.log(singleProduct)
 
     useEffect(() => {
-        dispatch(showProduct(userid.id))
-    }, [])
-
+        dispatch(showProduct(users?.id))
+    }, [users])
 
 
     useEffect(() => {
@@ -72,7 +78,7 @@ const UpdateProduct = () => {
         e.preventDefault();
         product.images = productImage
         product.thumbnail = productImage.slice(1)[0]
-        product.vendor_id = userid.id
+        product.vendor_id = users?.id
         dispatch(createProduct(product))
         console.log(product)
     }
@@ -81,7 +87,7 @@ const UpdateProduct = () => {
         <div className='container-fluid'>
             <ToastContainer />
             <div className="d-flex justify-content-between py-4">
-                <h2>Create Product</h2>
+                <h2>Update Product</h2>
                 <Link href='/dashboard/product'>
                     <button className='btn btn-warning'>Manage Product</button>
                 </Link>

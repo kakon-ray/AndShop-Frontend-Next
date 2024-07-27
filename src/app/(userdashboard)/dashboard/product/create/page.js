@@ -8,6 +8,7 @@ import { createProduct } from '../../../../../redux/features/productDetailsSlice
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { showUser } from '@/src/redux/features/userDetailSlice';
 
 const AddProduct = () => {
 
@@ -16,8 +17,13 @@ const AddProduct = () => {
     const [productImage, setProductImage] = useState([]);
     const dispatch = useDispatch();
 
-    const temUser = localStorage.getItem('user');
-    const userid = JSON.parse(temUser)
+    // start get user
+    const { users } = useSelector((state) => state.users);
+
+    useEffect(() => {
+        dispatch(showUser())
+    }, [])
+    // end get user
 
     useEffect(() => {
         // Initialize Dropzone
@@ -59,7 +65,7 @@ const AddProduct = () => {
         e.preventDefault();
         product.images = productImage
         product.thumbnail = productImage.slice(1)[0]
-        product.vendor_id = userid.id
+        product.vendor_id = users.id
         dispatch(createProduct(product))
 
     }

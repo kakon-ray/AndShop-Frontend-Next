@@ -5,9 +5,10 @@ import { toast } from 'react-toastify';
 
 
 
-export const showUser = createAsyncThunk('showUser', async (args, { rejectWithValue }) => {
+export const showUser = createAsyncThunk('showUser', async ( _, { rejectWithValue }) => {
     const token = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
-    const response = await fetch(`http://127.0.0.1:8000/api/user/show/${args}`, {
+    const userid = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).id : null;
+    const response = await fetch(`http://127.0.0.1:8000/api/user/show/${userid}`, {
         headers: {
             Authorization: 'Bearer' + ' ' + token,
         },

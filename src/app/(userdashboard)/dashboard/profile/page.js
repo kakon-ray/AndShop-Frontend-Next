@@ -19,7 +19,7 @@ const Profile = () => {
   const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
-    dispatch(showUser(userid.id))
+    dispatch(showUser())
   }, [])
 
   return (

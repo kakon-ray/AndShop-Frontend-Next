@@ -1,6 +1,7 @@
 
 "use client"
 import { showProduct } from '@/src/redux/features/productDetailsSlice';
+import { showUser } from '@/src/redux/features/userDetailSlice';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,18 +9,23 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const ManageProduct = () => {
 
-    const temUser = localStorage.getItem('user');
-    const userid = JSON.parse(temUser)
+
 
     const dispatch = useDispatch();
 
-
-    const {products} = useSelector((state) => state.products);
-
+    // start get user
+    const { users } = useSelector((state) => state.users);
 
     useEffect(() => {
-        dispatch(showProduct(userid.id))
+        dispatch(showUser())
     }, [])
+    // end get user
+
+    const { products } = useSelector((state) => state.products);
+
+    useEffect(() => {
+        dispatch(showProduct(users.id))
+    }, [users])
 
 
     return (
@@ -51,7 +57,7 @@ const ManageProduct = () => {
                             {products?.map(item => {
                                 return <tr class="text-center" key={item.id}>
                                     <td class="th-sm text-center">
-                                        <img src={item?.thumbnail} style={{height:'50px'}} alt="Thumbnail" />
+                                        <img src={item?.thumbnail} style={{ height: '50px' }} alt="Thumbnail" />
                                     </td>
                                     <td class="th-sm text-center">{item?.name}</td>
                                     <td class="th-sm text-center">{item?.category_id}</td>
