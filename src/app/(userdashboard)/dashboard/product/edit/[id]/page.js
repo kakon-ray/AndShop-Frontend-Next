@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -19,42 +20,35 @@ const UpdateProduct = () => {
     const [productImage, setProductImage] = useState([]);
     const dispatch = useDispatch();
     const params = useParams();
-
+    const [dropzoneInstance, setDropzoneInstance] = useState(null);
     // start get user
     const { users } = useSelector((state) => state.users);
-
-    useEffect(() => {
-        dispatch(showUser());
-    }, [dispatch]);
-    // end get user
-
     // start get category
     const { categories } = useSelector((state) => state.categories);
-
-    useEffect(() => {
-        dispatch(showCategory());
-    }, [dispatch]);
-    // end get category
-
     // start get subcategory
     const { subcategories } = useSelector((state) => state.subcategories);
 
     useEffect(() => {
+        dispatch(showUser());
+        dispatch(showCategory());
         dispatch(showSubcategory());
     }, [dispatch]);
-    // end get subcategory
+
 
     const { products } = useSelector((state) => state.products);
 
     const singleProduct = products?.find(item => item.id == params.id) || {};
 
 
-
     useEffect(() => {
         dispatch(showProduct(users?.id));
     }, [dispatch, users]);
 
+
     useEffect(() => {
+        if (dropzoneInstance) {
+            dropzoneInstance.destroy();
+        }
         // Initialize Dropzone
         const dz = new Dropzone(dropzoneRef.current, {
             url: 'http://127.0.0.1:8000/api/upload-images', // Change this to your upload endpoint
@@ -80,6 +74,7 @@ const UpdateProduct = () => {
 
                 });
 
+                console.log(singleProduct?.images)
                 // Avoid adding duplicate images
                 const addedFiles = new Set();
                 if (singleProduct?.images && singleProduct?.images.length > 0) {
@@ -90,6 +85,7 @@ const UpdateProduct = () => {
                             this.emit("addedfile", mockFile);
                             this.emit("thumbnail", mockFile, imageUrl);
                             this.emit("complete", mockFile);
+                           
                         }
                     });
 
@@ -99,9 +95,12 @@ const UpdateProduct = () => {
             }
         });
 
+        setDropzoneInstance(dz);
         // Cleanup Dropzone on component unmount
         return () => {
-            dz.destroy();
+            if (dz) {
+                dz.destroy();
+            }
         };
     }, [singleProduct,params?.id]);
 

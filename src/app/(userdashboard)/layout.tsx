@@ -24,8 +24,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <TopNavbar />
-        <HeaderNav /> */}
+        <TopNavbar />
+        <HeaderNav />
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">
@@ -38,7 +38,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
