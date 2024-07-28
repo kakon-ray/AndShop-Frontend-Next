@@ -124,7 +124,7 @@ const productDetail = createSlice({
             .addCase(createProduct.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-                toast.error('Failed to update User!');
+                toast.error('Failed to update product!');
             })
 
             //   update product
@@ -147,7 +147,7 @@ const productDetail = createSlice({
             .addCase(updateProduct.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-                toast.error('Failed to update User!');
+                toast.error('Failed to update product!');
             })
 
             // delete product
