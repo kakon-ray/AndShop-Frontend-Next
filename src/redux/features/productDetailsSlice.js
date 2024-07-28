@@ -137,7 +137,7 @@ const productDetail = createSlice({
                     state.products = state.products.map((item) =>
                         item.id === action.payload.product.id ? action.payload.product : item 
                       );
-                      console.log(state.products)
+
                     toast.success(action.payload.msg);
                 }else{
                     toast.error(action.payload.msg);

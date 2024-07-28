@@ -1,4 +1,3 @@
-
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -19,43 +18,41 @@ const UpdateProduct = () => {
     const dropzoneRef = useRef(null);
     const [productImage, setProductImage] = useState([]);
     const dispatch = useDispatch();
-    const params = useParams()
+    const params = useParams();
 
     // start get user
     const { users } = useSelector((state) => state.users);
 
     useEffect(() => {
-        dispatch(showUser())
-    }, [])
+        dispatch(showUser());
+    }, [dispatch]);
     // end get user
 
     // start get category
     const { categories } = useSelector((state) => state.categories);
-    
+
     useEffect(() => {
-        dispatch(showCategory())
-    }, [])
+        dispatch(showCategory());
+    }, [dispatch]);
     // end get category
 
     // start get subcategory
     const { subcategories } = useSelector((state) => state.subcategories);
 
     useEffect(() => {
-        dispatch(showSubcategory())
-    }, [])
+        dispatch(showSubcategory());
+    }, [dispatch]);
     // end get subcategory
-
-
 
     const { products } = useSelector((state) => state.products);
 
-    const singleProduct = products?.filter(item => item.id == params.id ? item : "")[0]
+    const singleProduct = products?.find(item => item.id == params.id) || {};
+
 
 
     useEffect(() => {
-        dispatch(showProduct(users?.id))
-    }, [users])
-
+        dispatch(showProduct(users?.id));
+    }, [dispatch, users]);
 
     useEffect(() => {
         // Initialize Dropzone
@@ -78,7 +75,11 @@ const UpdateProduct = () => {
                 this.on("error", function (file, response) {
                     console.log("File upload error");
                 });
-    
+                this.on("removedfile", function (file) {
+                    setProductImage(prevImages => prevImages.filter(image => image !== file.name));
+
+                });
+
                 // Avoid adding duplicate images
                 const addedFiles = new Set();
                 if (singleProduct?.images && singleProduct?.images.length > 0) {
@@ -89,21 +90,15 @@ const UpdateProduct = () => {
                             this.emit("addedfile", mockFile);
                             this.emit("thumbnail", mockFile, imageUrl);
                             this.emit("complete", mockFile);
-                           
                         }
                     });
-                    setProductImage(singleProduct?.images?.map(imageUrl => {
-                        try {
-                            const url = new URL(imageUrl, 'http://127.0.0.1:8000');
-                            return url.pathname.split('/').pop();
-                        } catch (error) {
-                            return imageUrl;
-                        }
-                    }));
+
+                    setProductImage(singleProduct.images);
+
                 }
             }
         });
-    
+
         // Cleanup Dropzone on component unmount
         return () => {
             dz.destroy();
@@ -111,17 +106,45 @@ const UpdateProduct = () => {
     }, [singleProduct]);
 
     const getProduct = (e) => {
-        setProduct({ ...singleProduct, [e.target.name]: e.target.value })
+        setProduct({ ...singleProduct, [e.target.name]: e.target.value });
     }
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        product.images = productImage
-        product.thumbnail = productImage.slice(1)[0]
-        product.vendor_id = users?.id
-        dispatch(updateProduct(product))
-       
+        product.images = productImage.map(imageObj => {
+            try {
+                // Try to create a URL object to extract the pathname
+                const url = new URL(imageObj.url);
+                return url.pathname;
+            } catch (error) {
+                // If the URL is invalid or relative, handle it by constructing it with a base URL
+                const baseUrl = window.location.origin; // or a specific base URL if needed
+                try {
+                    const url = new URL(imageObj, baseUrl);
+                    return url.pathname;
+                } catch (innerError) {
+                    console.error('Invalid URL:', imageObj.url, innerError);
+                    return ''; // or some default value or error handling logic
+                }
+            }
+        });
+
+        if (productImage.length > 1) {
+            let url;
+            try {
+              url = new URL(productImage[1].url);
+            } catch (error) {
+              // Handle relative URLs by constructing them with a base URL
+              const baseUrl = window.location.origin; // or a specific base URL
+              url = new URL(productImage[1], baseUrl);
+            }
+            product.thumbnail = url.pathname;
+          } else {
+            product.thumbnail = null; // or some default value
+          }
+        product.vendor_id = users?.id;
+        dispatch(updateProduct(product));
+        console.log(productImage)
     }
 
     return (
@@ -140,77 +163,77 @@ const UpdateProduct = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="row pb-3">
 
-                            <div class="col-lg-6 py-2">
+                            <div className="col-lg-6 py-2">
                                 <label>Product Name</label>
-                                <input required type="text" class="form-control" name="name" placeholder="Product Name" defaultValue={singleProduct?.name} onChange={getProduct} />
+                                <input required type="text" className="form-control" name="name" placeholder="Product Name" defaultValue={singleProduct?.name} onChange={getProduct} />
                             </div>
 
-
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Category</label>
-                                <select class="form-select" name="category_id" aria-label="Default select example" onChange={getProduct}>
-                                    <option selected>Open this select category</option>
-                                    {categories?.map(item => {
-                                        return <option defaultValue={item?.id} key={item?.id} selected={item?.id == singleProduct?.category_id}>{item?.category_name}</option>
-                                    })}
-                                    
+                                <select className="form-select" name="category_id" aria-label="Default select example" onChange={getProduct}>
+                                    <option value="">Open this select category</option>
+                                    {categories?.map(item => (
+                                        <option key={item?.id} value={item?.id} selected={item?.id == singleProduct?.category_id}>
+                                            {item?.category_name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Sub Category</label>
-                                <select class="form-select" name="subcategory_id" aria-label="Default select example" onChange={getProduct}> 
-                                    <option selected>Open this select category</option>
-                                    {subcategories?.map(item => {
-                                        return <option defaultValue={item?.id} key={item?.id} selected={item?.id == singleProduct?.subcategory_id}>{item?.subcategory_name}</option>
-                                    })}
-                                    
+                                <select className="form-select" name="subcategory_id" aria-label="Default select example" onChange={getProduct}>
+                                    <option value="">Open this select category</option>
+                                    {subcategories?.map(item => (
+                                        <option key={item?.id} value={item?.id} selected={item?.id == singleProduct?.subcategory_id}>
+                                            {item?.subcategory_name}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Product Code </label>
-                                <input required type="text" class="form-control" name="code" placeholder="Product Code" defaultValue={singleProduct?.code} onChange={getProduct} />
+                                <input required type="text" className="form-control" name="code" placeholder="Product Code" defaultValue={singleProduct?.code} onChange={getProduct} />
                             </div>
 
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Product Tags </label>
-                                <input required type="text" class="form-control" name="tags" placeholder="Product Tags" defaultValue={singleProduct?.tags} onChange={getProduct} />
+                                <input required type="text" className="form-control" name="tags" placeholder="Product Tags" defaultValue={singleProduct?.tags} onChange={getProduct} />
                             </div>
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Purchase Price</label>
-                                <input required type="text" class="form-control" name="purchase_price" placeholder="Purchase Price" defaultValue={singleProduct?.purchase_price} onChange={getProduct} />
+                                <input required type="text" className="form-control" name="purchase_price" placeholder="Purchase Price" defaultValue={singleProduct?.purchase_price} onChange={getProduct} />
                             </div>
 
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Selling Price</label>
-                                <input required type="text" class="form-control" name="selling_price" placeholder="Selling Price" defaultValue={singleProduct?.selling_price} onChange={getProduct} />
+                                <input required type="text" className="form-control" name="selling_price" placeholder="Selling Price" defaultValue={singleProduct?.selling_price} onChange={getProduct} />
                             </div>
 
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Discount Price</label>
-                                <input required type="text" class="form-control" name="discount_price" placeholder="Discount Price" defaultValue={singleProduct?.discount_price} onChange={getProduct} />
+                                <input required type="text" className="form-control" name="discount_price" placeholder="Discount Price" defaultValue={singleProduct?.discount_price} onChange={getProduct} />
                             </div>
 
-                            <div class="col-lg-3 py-2">
+                            <div className="col-lg-3 py-2">
                                 <label>Stock Quantity</label>
-                                <input required type="text" class="form-control" name="stock_quantity" placeholder="Stock Quantity" defaultValue={singleProduct?.stock_quantity} onChange={getProduct} />
+                                <input required type="text" className="form-control" name="stock_quantity" placeholder="Stock Quantity" defaultValue={singleProduct?.stock_quantity} onChange={getProduct} />
                             </div>
 
-                            <div class="col-lg-12 py-2">
+                            <div className="col-lg-12 py-2">
                                 <label>Description</label>
-                                <textarea name="description" class="form-control" onChange={getProduct} defaultValue={singleProduct?.description}></textarea>
+                                <textarea name="description" className="form-control" onChange={getProduct} defaultValue={singleProduct?.description}></textarea>
                             </div>
 
-                            <div class="col-lg-12 py-2">
+                            <div className="col-lg-12 py-2">
                                 <label>Thumbnail</label>
                                 <div ref={dropzoneRef} className="dropzone"></div>
                             </div>
 
-
                         </div>
 
-                        <button type="submit" class="btn btn-warning mb-4">
+                        <button type="submit" className="btn btn-warning mb-4">
                             Submit
                         </button>
 
