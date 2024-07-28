@@ -103,7 +103,7 @@ const UpdateProduct = () => {
         return () => {
             dz.destroy();
         };
-    }, [singleProduct]);
+    }, [singleProduct,params?.id]);
 
     const getProduct = (e) => {
         setProduct({ ...singleProduct, [e.target.name]: e.target.value });
@@ -114,7 +114,7 @@ const UpdateProduct = () => {
         product.images = productImage.map(imageObj => {
             try {
                 // Try to create a URL object to extract the pathname
-                const url = new URL(imageObj.url);
+                const url = new URL(imageObj);
                 return url.pathname;
             } catch (error) {
                 // If the URL is invalid or relative, handle it by constructing it with a base URL
@@ -132,7 +132,7 @@ const UpdateProduct = () => {
         if (productImage.length > 1) {
             let url;
             try {
-              url = new URL(productImage[1].url);
+              url = new URL(productImage[1]);
             } catch (error) {
               // Handle relative URLs by constructing them with a base URL
               const baseUrl = window.location.origin; // or a specific base URL
