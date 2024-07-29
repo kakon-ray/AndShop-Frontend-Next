@@ -9,17 +9,32 @@ import NewFashon from '../../component/NewFashon/NewFashon'
 import LatestBlog from '../../component/LatestBlog/LatestBlog'
 import FollowUs from '../../component/FollowUs/FollowUs'
 
-export default function Home() {
+
+async function productsApi() {
+  const res = await fetch(`http://127.0.0.1:8000/api/get-all-product`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+const Home = async () => {
+  const products = await productsApi();
+
+
   return (
     <main>
-           <HeaderBanner/>
-           <NewCollection/>
-           <HotProducts/>
-           <OffCollection/>
-           <SlickCollection/>
-           <NewFashon/>
-           <LatestBlog/>
-           <FollowUs/>
+      <HeaderBanner />
+      <NewCollection />
+      <HotProducts products={products}/>
+      <OffCollection />
+      <SlickCollection />
+      <NewFashon />
+      <LatestBlog />
+      <FollowUs />
     </main>
   );
 }
+
+export default Home;

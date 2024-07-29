@@ -22,9 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <TopNavbar/> 
-        <HeaderNav/>
+        {/* <HeaderNav/> */}
         {children}
-        <Footer/>
+        {/* <Footer/> */}
         </body>
     </html>
   );

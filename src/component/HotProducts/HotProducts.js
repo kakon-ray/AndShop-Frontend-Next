@@ -1,12 +1,11 @@
-"use client"
-import React, { useEffect, useState } from "react";
+
 import ShopCard from "../ShopCard/ShopCard";
 import "./HotProducts.css";
 
-const HotProducts = () => {
-
+const HotProducts = ({ products }) => {
+// console.log(products)
   return (
-    <div id="hot-products" className="container-fluid mt-5 py-4">
+    <div id="hot-products" className="container mt-5 py-4">
       <div className="mx-auto text-center">
         <h1>Hot Products</h1>
         <p className="pt-0 mt-0">
@@ -41,42 +40,18 @@ const HotProducts = () => {
 
       <div className="row g-3">
 
-          <ShopCard
-            key={1}
+        {products?.products?.map(product => {
+          return <ShopCard
+            key={product.id}
             position="Trending"
-            title='Green Dress For Woman'
-            price={50}
-            img='https://andshop-react.netlify.app/static/media/product10.d71c44ec.png'
-            img1='https://andshop-react.netlify.app/static/media/product6.f19b14e6.png'
-            item='https://andshop-react.netlify.app/static/media/product9.60333e3e.png'
+            title={product?.name}
+            price={product?.selling_price}
+            img={product?.images[0]}
+            img1={product?.images[1]}
+            item={product}
           />
-          <ShopCard
-            key={1}
-            position="Trending"
-            title='Green Dress For Woman'
-            price={50}
-            img='https://andshop-react.netlify.app/static/media/product10.d71c44ec.png'
-            img1='https://andshop-react.netlify.app/static/media/product6.f19b14e6.png'
-            item='https://andshop-react.netlify.app/static/media/product9.60333e3e.png'
-          />
-          <ShopCard
-            key={1}
-            position="Trending"
-            title='Green Dress For Woman'
-            price={50}
-            img='https://andshop-react.netlify.app/static/media/product10.d71c44ec.png'
-            img1='https://andshop-react.netlify.app/static/media/product6.f19b14e6.png'
-            item='https://andshop-react.netlify.app/static/media/product9.60333e3e.png'
-          />
-          <ShopCard
-            key={1}
-            position="Trending"
-            title='Green Dress For Woman'
-            price={50}
-            img='https://andshop-react.netlify.app/static/media/product10.d71c44ec.png'
-            img1='https://andshop-react.netlify.app/static/media/product6.f19b14e6.png'
-            item='https://andshop-react.netlify.app/static/media/product9.60333e3e.png'
-          />
+        })}
+
 
       </div>
       <div className="text-center mt-5">
