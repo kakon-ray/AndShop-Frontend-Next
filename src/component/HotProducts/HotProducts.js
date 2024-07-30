@@ -3,7 +3,11 @@ import ShopCard from "../ShopCard/ShopCard";
 import "./HotProducts.css";
 
 const HotProducts = ({ products }) => {
-// console.log(products)
+  // console.log(products)
+  if (!products?.products || !products) {
+    return <h1>No product available</h1>
+  }
+
   return (
     <div id="hot-products" className="container mt-5 py-4">
       <div className="mx-auto text-center">

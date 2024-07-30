@@ -3,6 +3,7 @@ import userDetail from "./features/userDetailSlice";
 import productDetail from "./features/productDetailsSlice";
 import categoryDetail from "./features/categoryDetailSlice";
 import subCategoryDetail from "./features/subCategoryDetailSlice";
+import cartListDetail from "./features/cartDetailSlice";
 
 
 
@@ -12,5 +13,6 @@ export const store = configureStore({
     products:productDetail,
     categories:categoryDetail,
     subcategories:subCategoryDetail,
+    cartlist:cartListDetail,
   },
 });

@@ -5,6 +5,7 @@ import HeaderNav from '../../component/Navbar/HeaderNav'
 import TopNavbar from '../../component/TopNavbar/TopNavbar'
 import Footer from '../../component/Footer/Footer'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ReduxProvider } from "@/src/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <TopNavbar/> 
         {/* <HeaderNav/> */}
-        {children}
+        <ReduxProvider>{children}</ReduxProvider>
         {/* <Footer/> */}
         </body>
     </html>

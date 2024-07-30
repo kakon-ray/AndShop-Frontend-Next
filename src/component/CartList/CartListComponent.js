@@ -1,10 +1,22 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from 'react-redux';
+import { showCartList } from '@/src/redux/features/cartDetailSlice';
 
 const CartListComponent = () => {
+    const dispatch = useDispatch();
+
+    const { cartlist } = useSelector((state) => state.cartlist);
+    console.log(cartlist)
+  
+    useEffect(() => {
+      dispatch(showCartList())
+    }, [])
+
     return (
         <div className="my-5 container-fluid cart-page">
                 <div className="row table-responsive">
@@ -13,13 +25,14 @@ const CartListComponent = () => {
                             <tr id="table-tr-bg">
                                 <th scope="col">Remove</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">Product</th>
+                                <th scope="col">Product Title</th>
                                 <th scope="col">Price</th>
                             </tr>
                         </thead>
 
                         <tbody className="text-center text-justify">
-                            <tr>
+                            {cartlist?.map(item => {
+                                return  <tr key={item?.id}>
                                 <td scope="row">
                                     <FontAwesomeIcon
                                         icon={faTrash}
@@ -30,41 +43,21 @@ const CartListComponent = () => {
 
                                 <td>
                                     <img
-                                        src='https://andshop-react.netlify.app/static/media/product10.d71c44ec.png'
-                                        alt=""
+                                        src={item?.image}
+                                        alt={item?.name}
                                         style={{ width: "80px", height: "80px" }}
                                     />
                                 </td>
                                 <td>
-                                    <p className="mt-4">Title One</p>
+                                    <p className="mt-4">{item?.name}</p>
                                 </td>
                                 <td>
-                                    <p className="mt-4">500 tk</p>
+                                    <p className="mt-4">{item?.price}</p>
                                 </td>
                             </tr>
-                            <tr>
-                                <td scope="row">
-                                    <FontAwesomeIcon
-                                        icon={faTrash}
-                                        size="lg"
-                                        className="text-danger pt-4"
-                                    />
-                                </td>
-
-                                <td>
-                                    <img
-                                        src='https://andshop-react.netlify.app/static/media/product10.d71c44ec.png'
-                                        alt=""
-                                        style={{ width: "80px", height: "80px" }}
-                                    />
-                                </td>
-                                <td>
-                                    <p className="mt-4">Title One</p>
-                                </td>
-                                <td>
-                                    <p className="mt-4">500 tk</p>
-                                </td>
-                            </tr>
+                            })}
+                           
+                            
                         </tbody>
                     </table>
 
