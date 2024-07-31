@@ -51,12 +51,34 @@ export const addCartList = createAsyncThunk(
   }
 );
 
+export const updateCartList = createAsyncThunk(
+  "updateCartList",
+  async (data, { rejectWithValue }) => {
+    const { token } = getTokenAndUserId();
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/api/edit/cartlist',
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const deleteCartList = createAsyncThunk(
   "deleteCartList",
   async (id, { rejectWithValue }) => {
     const { token } = getTokenAndUserId();
     try {
-      const response = await axios.delete(
+      const response = await axios.get(
         `http://127.0.0.1:8000/api/delete/cartlist/${id}`,
         {
           headers: {
@@ -123,14 +145,36 @@ const cartListDetail = createSlice({
         toast.error('Failed to add to cart!');
       })
 
+      //   update cartlist
+      .addCase(updateCartList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateCartList.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.success == true) {
+          state.cartlist = state.cartlist.map((item) =>
+            item.id === action.payload.cartlist.id ? action.payload.cartlist : item
+          );
+        } else {
+          toast.error(action.payload.msg);
+        }
+
+      })
+      .addCase(updateCartList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        toast.error('Failed to update product!');
+      })
+
       // deleteCartList
       .addCase(deleteCartList.pending, (state) => {
         state.loading = true;
       })
       .addCase(deleteCartList.fulfilled, (state, action) => {
         state.loading = false;
+
         if (action.payload.success) {
-          state.cartlist = state.cartlist.filter((item) => item.id !== action.payload.id);
+          state.cartlist = state.cartlist.filter((item) => item.id !== parseInt(action.payload.id));
           toast.success(action.payload.msg);
         } else {
           toast.error(action.payload.msg);

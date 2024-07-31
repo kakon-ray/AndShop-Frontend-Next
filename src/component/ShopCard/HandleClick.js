@@ -32,11 +32,14 @@ const HandleClick = ({ item }) => {
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [successMessage, error, dispatch]);
 
-  if(successMessage){
-    router.push('/cartlist')
-  }
+    if(successMessage){
+      router.push('/cartlist')
+    }
+  }, [successMessage, error, dispatch, router]);
+
+  
+
 
 
   useEffect(() => {
@@ -56,7 +59,9 @@ const HandleClick = ({ item }) => {
     const sellingPrice = parseFloat(item?.selling_price) || 0;
     const discountPrice = parseFloat(item?.discount_price) || 0;
     
-    const price = sellingPrice - discountPrice;
+  
+      const price = sellingPrice  - discountPrice;
+    
 
     const product = {
       'user_id': user?.id,

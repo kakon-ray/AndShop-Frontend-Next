@@ -24,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <TopNavbar />
-        <HeaderNav />
+        <ReduxProvider>
+          <TopNavbar />
+          <HeaderNav />
+        </ReduxProvider>
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">

@@ -7,6 +7,7 @@ import Footer from '../../component/Footer/Footer'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ReduxProvider } from "@/src/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,12 +24,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastContainer/>
-        <TopNavbar/>
-        <HeaderNav/>
-        {children}
-        <Footer/>
-        </body>
+
+        <ToastContainer />
+        <ReduxProvider>
+          <TopNavbar />
+          <HeaderNav />
+          {children}
+          <Footer />
+        </ReduxProvider>
+      </body>
     </html>
   );
 }

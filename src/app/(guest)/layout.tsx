@@ -22,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <TopNavbar/> 
-        {/* <HeaderNav/> */}
-        <ReduxProvider>{children}</ReduxProvider>
-        {/* <Footer/> */}
-        </body>
+        <ReduxProvider>
+          <TopNavbar />
+          <HeaderNav />
+          {children}
+          <Footer />
+        </ReduxProvider>
+      </body>
     </html>
   );
 }

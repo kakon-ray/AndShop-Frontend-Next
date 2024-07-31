@@ -1,25 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import {
   Container,
   Nav,
   Button,
 } from "react-bootstrap";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-
 import "./HeaderNav.css";
 import Link from "next/link";
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { showCartList } from '@/src/redux/features/cartDetailSlice';
 
 const HeaderNav = () => {
 
+  const dispatch = useDispatch();
+
+  const { cartlist } = useSelector((state) => state.cartlist);
+ 
+
+  useEffect(() => {
+    dispatch(showCartList())
+  }, [dispatch])
 
   return (
     <>
@@ -66,7 +72,7 @@ const HeaderNav = () => {
               >
                 <FontAwesomeIcon icon={faShoppingBag} size="xl" />
                 <span className="position-absolute top-5 start-99 translate-middle badge rounded-pill p-1">
-                  5
+                  {cartlist?.length ? cartlist?.length : 0}
                   <span className="visually-hidden">unread messages</span>
                 </span>
               </Button>
